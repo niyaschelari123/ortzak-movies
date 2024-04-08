@@ -1,30 +1,215 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import { getStatusClassNames } from "antd/es/_util/statusUtils";
+import React, { useState } from "react";
+import classes from "./Nav.module.css";
+import { SearchOutlined } from "@ant-design/icons";
+import SignInModal from "./SignInModal/SignInModal";
+import { Link, useLocation } from "react-router-dom";
+import useWindowWidth from "./useWindowWidth";
+import { useHistory } from "react-router-dom";
+import { Button } from "antd";
+
+const navigations = [
+  { name: "Home", icon: "/img/icons/home-icon.png", link: "/" },
+  { name: "Movies", icon: "/img/icons/movies-icon.png", link: "/movies" },
+  { name: "Tv Shows", icon: "/img/icons/series-icon.png", link: "/tv-shows" },
+  { name: "Anime", icon: "/img/icons/anime-icon.png", link: "/anime" },
+  { name: "Add Show", icon: "/img/icons/add-show-icon.png", link: "/add-show" },
+  { name: "Wishlist", icon: "/img/icons/wishlist-icon.png", link: "/wishlist" },
+  { name: "Profile", icon: "/img/icons/profile-icon.png", link: "/profile" },
+];
 
 function Nav() {
-    return (
-        <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div className="container-fluid">
-          <Link className="navbar-brand mx-5" to="/">
-            Private Contact
-          </Link>
-       
-            <ul className="navbar-nav mx-5">
-              <li className="nav-item">
-                <Link className="nav-link"  to="/">
-                  Home
+  const [visible, setVisible] = useState(false);
+  const [reRender, setReRender] = useState(false);
+  const location = useLocation();
+  const [menuShow, setMenuShow] = useState(false);
+
+  const width = useWindowWidth();
+
+  const history = useHistory();
+
+  console.log("location pathname", location.pathname);
+
+  const user = localStorage.getItem("movielist_name");
+
+  const handleLogout = () => {
+    localStorage.removeItem("movielist_name");
+    localStorage.removeItem("movielist_auth_type");
+    localStorage.removeItem("movielist_email");
+    setReRender(!reRender);
+  };
+
+  return (
+    <>
+      <div className={classes.bannerOuter}>
+        {width > 900 && (
+          <div className={classes.bannerLeft}>
+            <Link style={{ textDecoration: "none" }} to="/">
+              <h3
+                className={`${
+                  location.pathname == "/"
+                    ? classes.navSelected
+                    : classes.navText
+                }`}
+              >
+                HOME
+              </h3>
+            </Link>
+            <Link style={{ textDecoration: "none" }} to="/tv-shows">
+              <h3
+                className={`${
+                  location.pathname == "/tv-shows"
+                    ? classes.navSelected
+                    : classes.navText
+                }`}
+              >
+                TV SHOWS
+              </h3>
+            </Link>
+            <Link style={{ textDecoration: "none" }} to="/movies">
+              <h3
+                className={`${
+                  location.pathname == "/movies"
+                    ? classes.navSelected
+                    : classes.navText
+                }`}
+              >
+                MOVIES
+              </h3>
+            </Link>
+            <Link style={{ textDecoration: "none" }} to="/anime">
+              <h3
+                className={`${
+                  location.pathname == "/anime"
+                    ? classes.navSelected
+                    : classes.navText
+                }`}
+              >
+                ANIME
+              </h3>
+            </Link>
+          </div>
+        )}
+        {width > 900 && (
+          <div className={classes.bannerRight}>
+            {/* <div className={classes.searchbar}>
+            <SearchOutlined
+              style={{ color: "white", cursor: "pointer", fontSize: "24px" }}
+            />
+            <input type="text" />
+          </div> */}
+            <Link style={{ textDecoration: "none" }} to="/wishlist">
+              <h3
+                className={`${
+                  location.pathname == "/wishlist"
+                    ? classes.wishListSelected
+                    : classes.wishList
+                }`}
+              >
+                WISHLIST
+              </h3>
+            </Link>
+
+            {user ? (
+              <div className={classes.userIcon}>
+                <Link style={{ textDecoration: "none" }} to="/profile">
+                  <img src="/img/user-icon.png" />
                 </Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/favourite">
-                  Favourate
+                <Link style={{ textDecoration: "none" }} to="/profile">
+                  <p>{user}</p>
                 </Link>
-              </li>           
-            </ul>
-        
-        </div>
-      </nav>
-    )
+                <div className={classes.logOutComponents}>
+                  <Link style={{ textDecoration: "none" }} to="/add-show">
+                    <p>Add Show</p>
+                  </Link>
+                  <p onClick={handleLogout}>Logout</p>
+                </div>
+              </div>
+            ) : (
+              <div
+                className={classes.signInButton}
+                onClick={() => setVisible(true)}
+              >
+                Sign In
+              </div>
+            )}
+          </div>
+        )}
+        {width < 900 && (
+          <div className={classes.burgerOuter}>
+            <img
+              src="/img/icons/three-line-icon.png"
+              onClick={() => setMenuShow(!menuShow)}
+            />
+            <div
+              className={`${
+                menuShow ? classes.slideMenuShow : classes.slideMenu
+              }`}
+            >
+              <div className={classes.closeDiv}>
+                <img
+                  onClick={() => setMenuShow(!menuShow)}
+                  src="/img/icons/close-icon.png"
+                />
+              </div>
+              <div className={classes.navigation}>
+                {navigations.map((item) => (
+                  <div className={classes.menuIndividual}>
+                    <Link to={`${item.link}`}>
+                      <img
+                        onClick={() => setMenuShow(!menuShow)}
+                        src={item.icon}
+                      />
+                    </Link>
+                    <Link
+                      style={{ textDecoration: "none" }}
+                      to={`${item.link}`}
+                    >
+                      <p onClick={() => setMenuShow(!menuShow)}>{item.name}</p>
+                    </Link>
+                  </div>
+                ))}
+              </div>
+              <div className={classes.profileComponent}>
+                {user ? (
+                  <div className={classes.profileDiv}>
+                    <img src="/img/icons/profile-image.png" />
+                    <p>{user}</p>
+                  </div>
+                ) : (
+                  ""
+                )}
+                <div className={classes.logOutDiv}>
+                  {user ? (
+                    <Button
+                      className={classes.logOutButton}
+                      onClick={handleLogout}
+                    >
+                      Logout
+                    </Button>
+                  ) : (
+                    <Button
+                      className={classes.logOutButton}
+                      onClick={() => setVisible(true)}
+                    >
+                      Login
+                    </Button>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+
+      <SignInModal
+        visible={visible}
+        setVisible={setVisible}
+        setMenuShow={setMenuShow}
+        menuShow={menuShow}
+      />
+    </>
+  );
 }
 
-export default Nav
+export default Nav;

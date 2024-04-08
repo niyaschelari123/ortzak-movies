@@ -1,0 +1,11 @@
+.posterOuter{
+    width: 88%;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+}
+
+.posterOuter img{
+    width: 100%;
+
+}

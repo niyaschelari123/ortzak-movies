@@ -1,26 +1,65 @@
+import { useSelector } from "react-redux";
 import Contact from "../components/Contact";
 import Form from "../components/Form";
+import { selectAuth } from "../redux/Reducers";
+import WelcomeBanner from "./welcome-banner/WelcomeBanner";
+import Categories from "./categories/Categories";
+import MalayalamMovies from "./malayalam-movies/MalayalamMovies";
+import { collection, getDocs, query, where } from "firebase/firestore";
+import { database } from "../firebase";
+import { useEffect, useState } from "react";
+import TamilMovies from "./tamil-movies/TamilMovies";
+import Poster from "./Poster/Poster";
+import Series from "./series/Series";
 
-function Home({ formSub, contacts, deleteContact, favToggle }) {
-    
+
+
+
+function Home() {
+
+  const user_email = localStorage.getItem("movielist_email");
+  const value = collection(database, `${user_email}_col`);
+  const [movieData, setMovieData] = useState([]);
+
+  const fetchMalayalam = async() => {
+    const q = query(
+      collection(database, `niyaschelari@gmail.com_col`),
+      where("language", "==", 'malayalam')
+    );
+
+    // Execute the query to fetch documents with the specified name
+    const querySnapshot = await getDocs(q);
+
+    // Extract data from the query snapshot
+    const documents = querySnapshot.docs.map((doc) => doc.data());
+    setMovieData(documents?.map((data)=>({
+      
+        title: data.name,
+        city: data.year,
+        state: "Kerala",
+        price: data.genre,
+        strikePrice: 180000,
+        review: 4.7,
+        img: data.images[0],
+      
+    })))
+
+    console.log("documents are", documents);
+  }
+
+  useEffect(()=>{
+    fetchMalayalam();
+  },[])
+
+
   return (
-    <div className="container my-5">
-      <div className="row justify-content-sm-center my-5">
-        <Form formSub={formSub} />
-      </div>
-      <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-5">
-        {contacts.map((singleContact) => {
-          return (
-            <Contact
-              key={singleContact.id}
-              favToggle={favToggle}
-              deleteContact={deleteContact}
-              contact={singleContact}
-            />
-          );
-        })}
-        {contacts.length === 0 && <div>No Contact to Show</div>}
-      </div>
+    <div className="">
+      <WelcomeBanner />
+      <Categories />
+      <MalayalamMovies data = {movieData} />
+      <TamilMovies />
+      <Poster image="/img/poster-three.jpg" />
+      <Series />
     </div>
   );
 }

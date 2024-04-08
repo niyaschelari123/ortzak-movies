@@ -1,0 +1,311 @@
+.bannerOuter{
+    background: #161324;
+    height: 96px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 40px;
+    width: 100%;
+
+}
+
+.searchbar img{
+    height: 70px;
+}
+
+.searchbar{
+    width: 300px;
+    border: 1px solid white;
+    height: 30px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+}
+
+.searchbar input{
+    background: transparent;
+    border: none;
+    width: 85%;
+    height: 30px;
+    color: white;
+    font-size: 16px;
+    
+
+}
+
+.searchabr input:focus {
+    outline: 1px solid red!important;
+    border: 1px solid red !important;
+  }
+
+  .searchabr input:active {
+    outline: 1px solid red!important;
+    border: 1px solid red !important;
+  }
+
+.bannerLeft{
+    display: flex;
+    flex-direction: row;
+    gap: 50px;
+}
+
+.bannerLeft h3{
+    color: white;
+    cursor: pointer;
+    font-size: 20px;
+}
+
+.wishList{
+    color: white;
+    cursor: pointer;
+    font-size: 20px;
+    font-weight: 500;
+    margin-right: 50px;
+}
+
+.wishListSelected{
+    color: yellow !important;
+    font-size: 20px;
+    margin-right: 50px;
+}
+
+
+/* .bannerLeft h3:hover{
+    color: yellow;
+} */
+
+.navSelected{
+    color: yellow !important;
+    font-size: 20px;
+}
+
+.bannerRight{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    
+}
+
+.signInButton{
+    height: 40px;
+    padding: 5px;
+    width: 75px;
+    background: #e50914;
+    color: white;
+    font-weight: 500;
+    border-radius: 3px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.userIcon{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    margin-top: 15px;
+    position: relative;
+}
+
+
+.logOutComponents{
+    display: flex;
+    flex-direction: column;
+    display: none;
+    position: absolute;
+    width: 150px;
+    top: 60px;
+    right: -20px;
+    background: #161324;
+    padding: 20px;
+    border-radius: 10px;
+    z-index: 999;
+}
+
+.userIcon:hover .logOutComponents{
+    display: block;
+}
+
+.logOutComponents p{
+    margin-bottom: 0;
+    margin-top: 0;
+    cursor: pointer;
+}
+
+.logOutComponents p:hover{
+    color: yellow;
+    font-weight: 500;
+}
+
+.userIcon img{
+    height: 40px;
+}
+
+.userIcon p{
+    color: white;
+    margin-top: 4px;
+}
+
+.burgerOuter{
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    position: relative;
+
+}
+
+.burgerOuter img{
+    height: 40px;
+    cursor: pointer;
+}
+
+.slideMenu{
+    height: 100vh;
+    width: 50vw;
+    background-color: white;
+    z-index: 999;
+    position: fixed;
+    top: 0;
+    right: 0;
+    transform: translateX(100%);
+    transition: transform 0.5s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.slideMenuShow{
+    transform: translateX(0);
+    height: 100vh;
+    width: 50vw;
+    background-color: white;
+    z-index: 999;
+    position: fixed;
+    top: 0;
+    right: 0;
+    transition: transform 0.5s ease;
+    display: flex;
+    flex-direction: column;
+
+}
+
+.closeDiv{
+    display: flex;
+    width: 100%;
+    justify-content: flex-end;
+    padding: 20px;
+}
+
+.closeDiv img{
+    height: 30px;
+    cursor: pointer;
+}
+
+.navigation{
+    padding: 20px;
+}
+
+.navigation img{
+    width: 30px;
+    height: auto;
+}
+
+.navigation p{
+    margin-bottom: 0;
+    cursor: pointer;
+    color: black;
+    font-weight: 400;
+}
+
+.menuIndividual{
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    margin-bottom: 20px;
+
+}
+
+.profileComponent{
+    padding-left: 20px;
+    padding-right: 20px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    bottom: 20px;
+}
+
+.profileDiv{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    border: 1px solid grey;
+    border-radius: 30px;
+    padding: 20px;
+}
+
+.profileDiv p{
+    margin-bottom: 0;
+    text-transform: capitalize;
+    font-weight: 500;
+}
+
+.logOutDiv{
+    width: 100%;
+}
+
+.logOutButton{
+    width: 100%;
+    border-radius: 10px;
+    padding: 10px 10px;
+    height: auto;
+    font-weight: 500;
+    font-size: 16px;
+    color: white;
+    background-color: red;
+}
+
+@media(max-width: 700px){
+
+    
+
+    .bannerOuter{
+        height: 50px;
+        padding: 0 15px;
+    }
+
+    .burgerOuter img{
+        height: 30px;
+    }
+}
+
+@media (max-width: 600px){
+    .slideMenu{
+        width: 85vw;
+    }
+
+    .slideMenuShow{
+        width: 85vw;
+    }
+}
+
+@media (max-width: 400px){
+    .slideMenu{
+        width: 80vw;
+    }
+
+    .slideMenuShow{
+        width: 80vw;
+    }
+}
+
+
+

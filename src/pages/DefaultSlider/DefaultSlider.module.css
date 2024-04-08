@@ -1,0 +1,71 @@
+.venuesOuter {
+  width: 88%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 80px;
+  margin-bottom: 80px;
+  position: relative;
+}
+
+.rightArrow {
+  position: absolute;
+  right: -30px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  z-index: 9;
+}
+
+.leftArrow {
+  position: absolute;
+  left: -20px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  z-index: 9;
+}
+
+.eventTitle {
+  color: black;
+  font-size: 24px;
+  font-family: Poppins;
+  font-weight: 500;
+  margin-bottom: 23px;
+}
+
+
+
+@media (max-width: 767px) {
+  .venuesOuter {
+    height: 369px !important;
+    margin-top: 60px;
+    margin-bottom: 60px;
+  }
+
+  .eventTitle {
+    font-size: 22px;
+
+  }
+
+  .leftArrow {
+    display: none;
+  }
+
+  .rightArrow {
+    display: none;
+  }
+
+  .eventTitle {
+    font-size: 22px;
+  }
+}
+
+@media (max-width: 480px) {
+  .eventTitle {
+    font-size: 20px;
+  }
+
+  .venuesOuter {
+    margin-bottom: 66px;
+  }
+}

@@ -1,0 +1,27 @@
+.filterSelect{
+    height: 41px !important;
+
+}
+
+.filterButton{
+    height: 41px !important;
+}
+
+.searchButton{
+    display: flex;
+    width: 100%;
+}
+
+.twoButtons{
+   margin-top: 15px;
+   display: flex;
+   gap: 10px;
+}
+
+
+
+@media (max-width: 800px){
+    .filterSelect{
+        width: 100%;
+    }
+}

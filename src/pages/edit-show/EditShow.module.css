@@ -1,0 +1,64 @@
+.addShowOuter{
+    width: 30vw;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.addShowOuter h2{
+    margin-top: 50px;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.addShowOuter input{
+    height: 46px;
+}
+
+.addShowOuter button{
+    width: 100%;
+    height: 46px;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.customSelect{
+    height: 46px;
+}
+
+.radioButton{
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+.radioFlex{
+    display: flex;
+    gap: 8px;
+}
+
+.radioFlex p{
+    font-size: 14px;
+    margin-bottom: 0;
+}
+
+.datePickerDiv{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.imageCard{
+    width: 30vw;
+}
+
+@media (max-width: 800px){
+
+    .addShowOuter{
+        width: 80vw;
+    }
+
+    .imageCard{
+        width: 80vw;
+    }
+
+}
