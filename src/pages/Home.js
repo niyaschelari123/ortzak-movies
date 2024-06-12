@@ -5,7 +5,7 @@ import { selectAuth } from "../redux/Reducers";
 import WelcomeBanner from "./welcome-banner/WelcomeBanner";
 import Categories from "./categories/Categories";
 import MalayalamMovies from "./malayalam-movies/MalayalamMovies";
-import { collection, getDocs, query, where } from "firebase/firestore";
+import { collection, getDocs, limit, query, where } from "firebase/firestore";
 import { database } from "../firebase";
 import { useEffect, useState } from "react";
 import TamilMovies from "./tamil-movies/TamilMovies";
@@ -20,11 +20,14 @@ function Home() {
   const user_email = localStorage.getItem("movielist_email");
   const value = collection(database, `${user_email}_col`);
   const [movieData, setMovieData] = useState([]);
+  const [loading, setLoading] = useState(true)
 
   const fetchMalayalam = async() => {
+    setLoading(true)
     const q = query(
       collection(database, `niyaschelari@gmail.com_col`),
-      where("language", "==", 'malayalam')
+      limit(30),
+      where("language", "==", 'malayalam')     
     );
 
     // Execute the query to fetch documents with the specified name
@@ -44,6 +47,8 @@ function Home() {
       
     })))
 
+    setLoading(false)
+
     console.log("documents are", documents);
   }
 
@@ -56,7 +61,7 @@ function Home() {
     <div className="">
       <WelcomeBanner />
       <Categories />
-      <MalayalamMovies data = {movieData} />
+      <MalayalamMovies data = {movieData} loading = {loading} />
       <TamilMovies />
       <Poster image="/img/poster-three.jpg" />
       <Series />

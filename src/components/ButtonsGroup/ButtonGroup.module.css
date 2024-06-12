@@ -1,0 +1,27 @@
+.buttonsWrapper{
+    display: flex;
+    gap: 8px;
+}
+
+.buttonsWrapper button{
+    width: 161px;
+    height: 45px;
+    border-radius: 6px;
+    text-align: center;
+font-family: Poppins;
+font-size: 14px;
+font-style: normal;
+font-weight: 600;
+}
+
+@media (max-width: 480px){
+    .buttonsWrapper{
+        flex-wrap: wrap;
+    }
+}
+
+@media (max-width: 390px){
+    .buttonsWrapper button{
+        width: 40vw;
+    }
+}

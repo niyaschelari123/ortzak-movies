@@ -15,6 +15,7 @@ function FilterComponent({
   setSearchValue,
   searchValue,
   fetchSeriesOnSearch,
+  page,
 }) {
   const [searchVisible, setSearchVisible] = useState(false);
   const width = useWindowWidth();
@@ -60,6 +61,7 @@ function FilterComponent({
           onClick={handleSearchClick}
         />
       )}
+      {width > 800 && (
         <Select
           loading={searchLoading}
           value = {searchValue}
@@ -75,6 +77,7 @@ function FilterComponent({
             <Option value={item.name}>{item.name}</Option>
           ))}
         </Select>
+        )}
         {width > 800 && (
           <>
         <Button onClick={fetchSeriesOnSearch} className="search-button-web">
@@ -90,7 +93,7 @@ function FilterComponent({
       
       {/* <div className="search-container"> */}
     </div>
-    {width < 800 && (
+    {/* {width < 800 && (
     <div className={classes.twoButtons}>
     <Button onClick={() => {
       setFlag(true)
@@ -101,7 +104,7 @@ function FilterComponent({
   Clear
 </Button>
 </div>
-    )}
+    )} */}
 </>
   );
 }

@@ -8,7 +8,7 @@
 
 .sliderOuter img {
   width: 100%;
-  height: 70vh !important;
+  height: 90vh !important;
   object-fit: cover;
 }
 
@@ -47,10 +47,11 @@
 
 @media (max-width: 480px){
   .sliderOuter{
-    height: 217px !important;
+    height: 257px !important;
   }
 
   .sliderOuter img{
     height: auto !important;
+    height: 257px !important;
   }
 }

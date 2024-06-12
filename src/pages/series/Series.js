@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import DefaultSlider from "../DefaultSlider/DefaultSlider";
-import { collection, getDocs, query, where } from "firebase/firestore";
+import { collection, getDocs, limit, query, where } from "firebase/firestore";
 import { database } from "../../firebase";
 import LoadingComponent from "../../components/LoadingComponent/LoadingComponent";
 
@@ -15,7 +15,8 @@ function Series() {
         setLoading(true);
         const q = query(
           collection(database, `niyaschelari@gmail.com_col`),
-          where("type", "==", 'series')
+          limit(30),
+          where("type", "==", 'series'),
         );
     
         // Execute the query to fetch documents with the specified name
@@ -23,9 +24,9 @@ function Series() {
     
         // Extract data from the query snapshot
         const documents = querySnapshot.docs.map((doc) => doc.data());
-        if(documents?.length>0){
-            setLoading(false);
-        }
+        // if(documents?.length>0){
+        //     setLoading(false);
+        // }
         setMovieData(documents?.map((data)=>({
           
             title: data.name,
@@ -37,6 +38,8 @@ function Series() {
             img: data.images[0],
           
         })))
+
+        setLoading(false)
     
         console.log("series documents are", documents);
       }
@@ -48,7 +51,7 @@ function Series() {
 
   return (
     <div>
-      <DefaultSlider data={movieData} title="Series" />
+      <DefaultSlider data={movieData} title="Series" loading = {loading} />
     </div>
   );
 }

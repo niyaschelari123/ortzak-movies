@@ -13,8 +13,10 @@ const navigations = [
   { name: "Movies", icon: "/img/icons/movies-icon.png", link: "/movies" },
   { name: "Tv Shows", icon: "/img/icons/series-icon.png", link: "/tv-shows" },
   { name: "Anime", icon: "/img/icons/anime-icon.png", link: "/anime" },
+  { name: "Search", icon: "/img/search.png", link: "/search" },
   { name: "Add Show", icon: "/img/icons/add-show-icon.png", link: "/add-show" },
   { name: "Wishlist", icon: "/img/icons/wishlist-icon.png", link: "/wishlist" },
+  { name: "Add to Wishlist", icon: "/img/icons/wishlist-add-icon.png", link: "/wishlist-add" },
   { name: "Profile", icon: "/img/icons/profile-icon.png", link: "/profile" },
 ];
 
@@ -55,8 +57,16 @@ function Nav() {
                 HOME
               </h3>
             </Link>
-            <Link style={{ textDecoration: "none" }} to="/tv-shows">
+            <Link
+              style={{ textDecoration: "none" }}
+              to={`${user ? "/tv-shows" : "/"}`}
+            >
               <h3
+                onClick={() => {
+                  if (!user) {
+                    setVisible(true);
+                  }
+                }}
                 className={`${
                   location.pathname == "/tv-shows"
                     ? classes.navSelected
@@ -66,8 +76,16 @@ function Nav() {
                 TV SHOWS
               </h3>
             </Link>
-            <Link style={{ textDecoration: "none" }} to="/movies">
+            <Link
+              style={{ textDecoration: "none" }}
+              to={`${user ? "/movies" : "/"}`}
+            >
               <h3
+                onClick={() => {
+                  if (!user) {
+                    setVisible(true);
+                  }
+                }}
                 className={`${
                   location.pathname == "/movies"
                     ? classes.navSelected
@@ -77,8 +95,16 @@ function Nav() {
                 MOVIES
               </h3>
             </Link>
-            <Link style={{ textDecoration: "none" }} to="/anime">
+            <Link
+              style={{ textDecoration: "none" }}
+              to={`${user ? "/anime" : "/"}`}
+            >
               <h3
+                onClick={() => {
+                  if (!user) {
+                    setVisible(true);
+                  }
+                }}
                 className={`${
                   location.pathname == "/anime"
                     ? classes.navSelected
@@ -86,6 +112,25 @@ function Nav() {
                 }`}
               >
                 ANIME
+              </h3>
+            </Link>
+            <Link
+              style={{ textDecoration: "none" }}
+              to={`${user ? "/documentary" : "/"}`}
+            >
+              <h3
+                onClick={() => {
+                  if (!user) {
+                    setVisible(true);
+                  }
+                }}
+                className={`${
+                  location.pathname == "/documentary"
+                    ? classes.navSelected
+                    : classes.navText
+                }`}
+              >
+                DOCUMENTARY
               </h3>
             </Link>
           </div>
@@ -98,8 +143,16 @@ function Nav() {
             />
             <input type="text" />
           </div> */}
-            <Link style={{ textDecoration: "none" }} to="/wishlist">
+            <Link
+              style={{ textDecoration: "none" }}
+              to={`${user ? "/wishlist" : "/"}`}
+            >
               <h3
+                onClick={() => {
+                  if (!user) {
+                    setVisible(true);
+                  }
+                }}
                 className={`${
                   location.pathname == "/wishlist"
                     ? classes.wishListSelected
@@ -121,6 +174,12 @@ function Nav() {
                 <div className={classes.logOutComponents}>
                   <Link style={{ textDecoration: "none" }} to="/add-show">
                     <p>Add Show</p>
+                  </Link>
+                  <Link style={{ textDecoration: "none" }} to="/wishlist-add">
+                    <p>Add to Wishlist</p>
+                  </Link>
+                  <Link style={{ textDecoration: "none" }} to="/watch-history">
+                    <p>Watch History</p>
                   </Link>
                   <p onClick={handleLogout}>Logout</p>
                 </div>
@@ -155,17 +214,33 @@ function Nav() {
               <div className={classes.navigation}>
                 {navigations.map((item) => (
                   <div className={classes.menuIndividual}>
-                    <Link to={`${item.link}`}>
+                    <Link to={user ? item.link : "/"}>
                       <img
-                        onClick={() => setMenuShow(!menuShow)}
+                        onClick={() => {
+                          if (user) {
+                            setMenuShow(!menuShow);
+                          } else {
+                            setVisible(true);
+                          }
+                        }}
                         src={item.icon}
                       />
                     </Link>
                     <Link
                       style={{ textDecoration: "none" }}
-                      to={`${item.link}`}
+                      to={user ? item.link : "/"}
                     >
-                      <p onClick={() => setMenuShow(!menuShow)}>{item.name}</p>
+                      <p
+                        onClick={() => {
+                          if (user) {
+                            setMenuShow(!menuShow);
+                          } else {
+                            setVisible(true);
+                          }
+                        }}
+                      >
+                        {item.name}
+                      </p>
                     </Link>
                   </div>
                 ))}

@@ -6,6 +6,8 @@
     justify-content: space-between;
     padding: 0 40px;
     width: 100%;
+    position: fixed;
+    z-index: 999999;
 
 }
 
@@ -118,7 +120,7 @@
     flex-direction: column;
     display: none;
     position: absolute;
-    width: 150px;
+    width: 180px;
     top: 60px;
     right: -20px;
     background: #161324;
@@ -238,8 +240,8 @@
     gap: 15px;
     justify-content: center;
     align-items: center;
-    position: absolute;
-    bottom: 20px;
+    margin-top: 30px;
+
 }
 
 .profileDiv{

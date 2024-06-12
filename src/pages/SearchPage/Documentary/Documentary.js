@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import classes from "./Movies.module.css";
+import classes from "./Documentary.module.css";
 import { useHistory } from "react-router-dom";
 import EventCard from "../EventCard/EventCard";
 import { collection, getDocs, limit, query, where } from "firebase/firestore";
@@ -7,7 +7,7 @@ import { database } from "../../../firebase";
 import LoadingComponent from "../../../components/LoadingComponent/LoadingComponent";
 import FilterComponent from "../FilterComponent/FilterComponent";
 
-function Movies() {
+function Documentary() {
   const history = useHistory();
   const [movieData, setMovieData] = useState([]);
   const user_email = localStorage.getItem("movielist_email");
@@ -25,13 +25,13 @@ function Movies() {
     if (searchValue!=undefined && searchValue!="") {
       q = query(
         collection(database, `${user_email}_col`),
-        where("type", "==", "movies"),
+        where("type", "==", "documentary"),
         where("name", "==", searchValue)
       );
     } else {
       q = query(
         collection(database, `${user_email}_col`),
-        where("type", "==", "movies"),
+        where("type", "==", "documentary"),
         limit(52)
       );
     }
@@ -93,7 +93,7 @@ function Movies() {
     const q = query(
       collection(database, `movieNames`),
       where("searchId", "==", searchData), // Fetch documents where name starts with searchData
-      where("type", "==", 'movies'),
+      where("type", "==", 'documentary'),
     );
 
     try {
@@ -177,4 +177,4 @@ function Movies() {
   );
 }
 
-export default Movies;
+export default Documentary;

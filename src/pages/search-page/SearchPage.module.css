@@ -1,0 +1,44 @@
+.searchOuter{
+    width: 88%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 6rem;
+}
+
+.searchDiv{
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.searchDiv img{
+    height: 25px;
+    cursor: pointer;
+}
+
+.searchInuput{
+    height: 51px;
+    font-size: 16px;
+}
+
+.namesContainer{
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.namesContainer p{
+    border: none;
+    padding: 10px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    text-transform: capitalize;
+    background-color: red;
+    color: white;
+    font-weight: 500;
+    font-size: 14px;
+    margin-bottom: 0;
+
+}

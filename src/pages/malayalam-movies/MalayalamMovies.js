@@ -49,12 +49,10 @@ import DefaultSlider from "../DefaultSlider/DefaultSlider";
 //   },
 // ];
 
-function MalayalamMovies({data}) {
-
-
+function MalayalamMovies({ data, loading }) {
   return (
     <div>
-      <DefaultSlider data={data} title="Malayalam" />
+      <DefaultSlider data={data} title="Malayalam" loading = {loading} />
     </div>
   );
 }

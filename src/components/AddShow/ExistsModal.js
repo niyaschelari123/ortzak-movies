@@ -16,6 +16,7 @@ function ExistsModal({
   setBaseImages,
   setImages,
   value,
+  type
 }) {
   const [buttonLoading, setButtonLoading] = useState(false);
 
@@ -58,7 +59,9 @@ function ExistsModal({
 
     await addDoc(value, values);
     message.success("Show Added Successfully");
+    if(type!="wishlist"){
     formRef.current.resetFields();
+    }
     setBaseImages([]);
     setImages([]);
     setLoading(false);
@@ -91,7 +94,9 @@ function ExistsModal({
         <Button
           onClick={() => {
             setExistsModal(false);
+            if(type!="wishlist"){
             formRef.current.resetFields();
+            }
           }}
           type="primary"
         >

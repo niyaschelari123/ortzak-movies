@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import classes from "./EditShow.module.css";
+import classes from "./EditWishlist.module.css";
 import {
   Form,
   Input,
@@ -23,11 +23,11 @@ import {
   getDocs,
   updateDoc,
 } from "firebase/firestore";
-import { database } from "../../firebase";
-import ExistsModal from "../../components/AddShow/ExistsModal";
-import { useHistory, useParams } from "react-router-dom";
+import ExistsModal from "../../../components/AddShow/ExistsModal";
+import { useParams, useHistory } from "react-router-dom";
 import moment from "moment";
-import LoadingComponent from "../../components/LoadingComponent/LoadingComponent";
+import { database } from "../../../firebase";
+
 
 const movieGenres = [
   "Action",
@@ -76,11 +76,10 @@ const languageArray = [
   { value: "other", label: "other" },
 ];
 
-function EditShow() {
+function EditWishlist() {
   const { Option } = Select;
 
   const history = useHistory();
-
   const { id, title, year } = useParams();
   console.log("id value is", id, title, year);
 
@@ -97,7 +96,7 @@ function EditShow() {
     let q;
 
     q = query(
-      collection(database, `${user_email}_col`),
+      collection(database, `${user_email}_wishlist`),
       where("name", "==", title),
       where("year", "==", year)
     );
@@ -158,7 +157,6 @@ function EditShow() {
     }
 
     if (movieData[0]?.img) {
-      // setBaseImages([movieData[0]?.img]);
       setBaseImages([{
         uid: 0,
         name: "image.png",
@@ -172,7 +170,7 @@ function EditShow() {
 
     if (movieData[0]?.title) {
       let title = movieData[0]?.title;
-      console.log("title value is", title, movieData[0]?.img);
+      console.log("title value is", title);
       // Split the string into an array of words
       let words = title?.split(" ");
 
@@ -182,14 +180,6 @@ function EditShow() {
         .join(" ");
     }
 
-    if(movieData[0]?.img){
-      console.log("image value is",movieData[0]);
-      formRef.current.setFieldsValue({
-        images: movieData[0]?.img
-      })
-
-    }
-
     formRef.current.setFieldsValue({
       name: formattedString,
       year: movieData[0]?.year,
@@ -197,7 +187,6 @@ function EditShow() {
       genre: movieData[0]?.genre,
       language: movieData[0]?.language,
       type: movieData[0]?.type,
-      images: movieData[0]?.img
 
       // Add other field names and their corresponding values here
     });
@@ -277,7 +266,6 @@ function EditShow() {
   };
 
   const onFinish = async (values) => {
-    // values.images = baseImages;
     values.images = [imageToShow];
     values.name = values.name.toLowerCase();
     setLoading(true);
@@ -294,7 +282,6 @@ function EditShow() {
     const documents = querySnapshot.docs.map((doc) => doc.data());
 
     console.log("documents are", documents, watchedDay);
-    console.log('edit values are', values)
 
     // const dbVal = await getDocs(value);
     // const movieDetails = dbVal.docs.map((doc) => ({
@@ -316,32 +303,6 @@ function EditShow() {
       setStoreData(values);
       setExistsModal(true);
     } else {
-      if (watchedDay == "today") {
-        console.log("watched day is today");
-        const today = new Date();
-        const options = {
-          day: "2-digit",
-          month: "2-digit",
-          year: "numeric",
-          hour: "2-digit",
-          minute: "2-digit",
-          second: "2-digit",
-          hour12: true,
-        };
-        const formattedDate = today.toLocaleString("en-GB", options);
-        values.watchedDate = formattedDate;
-        delete values["Watched_Date"];
-      }
-      if (watchedDay != "dont remember" && watchedDay != "today") {
-        console.log("watched day is choose date");
-        values.watchedDate = currentDate;
-        delete values["Watched_Date"];
-      }
-      if (watchedDay == "dont remember") {
-        console.log("watched day is dont remember");
-        values.watchedDate = "Dont Remember";
-        delete values["Watched_Date"];
-      }
 
       if (!movieData[0]?.searchIndex) {
         values.searchIndex = (values.name)?.toLowerCase()?.substring(0, 2);
@@ -349,7 +310,7 @@ function EditShow() {
 
       console.log("Received values:", values);
 
-      const updatedData = doc(database, `${user_email}_col`, id);
+      const updatedData = doc(database, `${user_email}_wishlist`, id);
       await updateDoc(updatedData, values);
 
       message.success("Show Edited Successfully");
@@ -387,7 +348,7 @@ function EditShow() {
   return (
     <>
         <div className={classes.addShowOuter}>
-          <h2>Edit Show</h2>
+          <h2>Edit Wishlist Show</h2>
           <Form
             ref={formRef}
             {...layout}
@@ -411,80 +372,8 @@ function EditShow() {
               <Input type="number" />
             </Form.Item>
             <Form.Item
-              label="watched_date"
-              name="Watched_Date"
-              //   rules={[{ required: true, message: "Please input the Date!" }]}
-              rules={[
-                // Add required rule conditionally
-                currentDate == null
-                  ? { required: true, message: "Please input the Date!" }
-                  : null,
-                // Add other static rules as needed
-              ].filter((rule) => rule !== null)}
-            >
-              <Radio.Group onChange={onChangeDate} defaultValue={watchedDay}>
-                <div
-                  className={classes.radioFlex}
-                  style={{ marginBottom: "10px" }}
-                >
-                  <img
-                    className={classes.radioButton}
-                    onClick={() => setWatchedDay("dont remember")}
-                    src={
-                      watchedDay == "dont remember"
-                        ? "/img/icons/radio-checked.png"
-                        : "/img/icons/radio-unchecked.png"
-                    }
-                  />
-                  <p>Dont Remember</p>
-                </div>
-                <div
-                  className={classes.radioFlex}
-                  style={{ marginBottom: "10px" }}
-                >
-                  <img
-                    onClick={() => setWatchedDay("today")}
-                    className={classes.radioButton}
-                    src={
-                      watchedDay == "today"
-                        ? "/img/icons/radio-checked.png"
-                        : "/img/icons/radio-unchecked.png"
-                    }
-                  />
-                  <p>Today</p>
-                </div>
-                <div
-                  className={classes.radioFlex}
-                  style={{ marginBottom: "10px" }}
-                >
-                  <img
-                    onClick={() => setWatchedDay("choose date")}
-                    className={classes.radioButton}
-                    src={
-                      watchedDay != "dont remember" && watchedDay != "today"
-                        ? "/img/icons/radio-checked.png"
-                        : "/img/icons/radio-unchecked.png"
-                    }
-                  />
-                  <p>Choose Date</p>
-                </div>
-              </Radio.Group>
-              {watchedDay != "dont remember" && watchedDay != "today" && (
-                <div className={classes.datePickerDiv}>
-                  <DatePicker
-                    onChange={handleDateChange}
-                    format="DD-MM-YYYY HH:mm:ss"
-                    showTime
-                    defaultDateTimeValue={moment(watchedDay)}
-                  />
-                  <p>Current : {currentDate}</p>
-                </div>
-              )}
-            </Form.Item>
-
-            <Form.Item
               label="Images"
-              // name="images"
+              name="images"
               rules={[
                 // Add required rule conditionally
                 baseImages?.length == 0
@@ -501,7 +390,7 @@ function EditShow() {
                   accept="image/png, image/jpeg, image/jpg, image/gif, image/bmp, image/webp, image/svg+xml"
                   fileList={baseImages}
                   onPreview={handlePreview}
-                  // onChange={handleChange}
+                  onChange={handleChange}
                   multiple
                   beforeUpload={() => false} //not to trigger upload when selecting images
                 >
@@ -575,7 +464,6 @@ function EditShow() {
                 <Option value="movies">Movies</Option>
                 <Option value="series">Series</Option>
                 <Option value="anime">Anime</Option>
-                <Option value="documentary">Documentary</Option>
 
                 {/* Add more options as needed */}
               </Select>
@@ -606,4 +494,4 @@ function EditShow() {
   );
 }
 
-export default EditShow;
+export default EditWishlist;

@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import classes from "./AddShow.module.css";
+import classes from "./AddWishList.module.css";
 import {
   Form,
   Input,
@@ -23,8 +23,9 @@ import {
   getDocs,
   updateDoc,
 } from "firebase/firestore";
-import { database } from "../../firebase";
-import ExistsModal from "./ExistsModal";
+import { database } from "../../../firebase";
+import ExistsModal from "../../../components/AddShow/ExistsModal";
+
 
 const movieGenres = [
   "Action",
@@ -73,11 +74,11 @@ const languageArray = [
   { value: "other", label: "other" },
 ];
 
-function AddShow() {
+function AddWishList() {
   const { Option } = Select;
 
   const user_email = localStorage.getItem("movielist_email");
-  const value = collection(database, `${user_email}_col`);
+  const value = collection(database, `${user_email}_wishlist`);
   const movieValue = collection(database, "movieNames");
 
   console.log("user email is", user_email, value);
@@ -95,7 +96,6 @@ function AddShow() {
   const [existsModal, setExistsModal] = useState(false);
   const [storeMovie, setStoreMovie] = useState({});
   const [storeData, setStoreData] = useState({});
-  const [imageLink, setImageLink] = useState("");
 
   const handleDateChange = (date, dateString) => {
     setSelectedDate(dateString);
@@ -134,7 +134,6 @@ function AddShow() {
   const handleCancel = () => setPreviewVisible(false);
 
   const handlePreview = async (file) => {
-    console.log('preview file', file)
     if (!file.url && !file.preview) {
       file.preview = await getBase64(file.originFileObj);
     }
@@ -157,7 +156,7 @@ function AddShow() {
     setLoading(true);
 
     const q = query(
-      collection(database, `${user_email}_col`),
+      collection(database, `${user_email}_wishlist`),
       where("name", "==", values?.name)
     );
 
@@ -186,37 +185,14 @@ function AddShow() {
       setStoreData(values);
       setExistsModal(true);
     } else {
-      if (dateValue == "today") {
-        const today = new Date();
-        const options = {
-          day: "2-digit",
-          month: "2-digit",
-          year: "numeric",
-          hour: "2-digit",
-          minute: "2-digit",
-          second: "2-digit",
-          hour12: true,
-        };
-        const formattedDate = today.toLocaleString("en-GB", options);
-        values.watchedDate = formattedDate;
-        delete values["Watched_Date"];
-      }
-      if (dateValue == "choose date") {
-        values.watchedDate = selectedDate;
-        delete values["Watched_Date"];
-      }
-      if (dateValue == "dont remember") {
-        values.watchedDate = "Dont Remember";
-        delete values["Watched_Date"];
-      }
       console.log("Received values:", values);
 
       let formattedStrings = values?.name?.toLowerCase()?.substring(0, 2);
-      await addDoc(movieValue, {
-        searchId: formattedStrings,
-        name: values.name,
-        type: values?.type,
-      });
+    //   await addDoc(movieValue, {
+    //     searchId: formattedStrings,
+    //     name: values.name,
+    //     type: values?.type,
+    //   });
 
       if(user_email.includes('@gmail')){
       await addDoc(value, values);
@@ -240,7 +216,7 @@ function AddShow() {
     },
   };
 
-  console.log("images are", previewImage);
+  console.log("images are", baseImages);
 
   const onChangeDate = (e) => {
     setDateValue(e.target.value);
@@ -257,7 +233,7 @@ function AddShow() {
 
   return (
     <div className={classes.addShowOuter}>
-      <h2>Add Show</h2>
+      <h2>Add to Wishlist</h2>
       <Form
         ref={formRef}
         {...layout}
@@ -280,30 +256,6 @@ function AddShow() {
         >
           <Input type="number" />
         </Form.Item>
-        <Form.Item
-          label="watched_date"
-          name="Watched_Date"
-          rules={[{ required: true, message: "Please input the Date!" }]}
-        >
-          <Radio.Group onChange={onChangeDate} value={dateValue}>
-            <div style={{ marginBottom: "10px" }}>
-              <Radio value="dont remember">Dont Remember</Radio>
-            </div>
-            <div style={{ marginBottom: "10px" }}>
-              <Radio value="today">Today</Radio>
-            </div>
-            <div style={{ marginBottom: "10px" }}>
-              <Radio value="choose date">Choose Date</Radio>
-            </div>
-          </Radio.Group>
-          {dateValue == "choose date" && (
-            <DatePicker
-              onChange={handleDateChange}
-              format="DD-MM-YYYY HH:mm:ss"
-              showTime
-            />
-          )}
-        </Form.Item>
 
         <Form.Item
           label="Images"
@@ -311,7 +263,7 @@ function AddShow() {
           rules={[{ required: true, message: "Please upload images!" }]}
         >
           <Card className={classes.imageCard}>
-            <Input onChange={imageChange} type="text" placeholder="Please enter Image link" style={{marginBottom: "15px"}} />
+          <Input onChange={imageChange} type="text" placeholder="Please enter Image link" style={{marginBottom: "15px"}} />
             <Upload
               name="images"
               listType="picture-card"
@@ -415,4 +367,4 @@ function AddShow() {
   );
 }
 
-export default AddShow;
+export default AddWishList;

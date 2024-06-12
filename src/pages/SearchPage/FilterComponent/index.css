@@ -2,7 +2,8 @@
     display: flex;
     align-items: center;
     /* justify-content: space-between; */
-    padding-top: 2rem;
+    padding-top: 9rem;
+
   }
   
   .select-container {
@@ -74,5 +75,9 @@
     .select-container{
       flex-direction: column;
       gap: 15px;
+    }
+
+    .navbar-container {
+      padding-top: 5rem;
     }
   }

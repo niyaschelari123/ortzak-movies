@@ -5,8 +5,9 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { Link } from "react-router-dom";
 import EventCard from "./EventCard/EventCard";
+import LoadingComponent from "../../components/LoadingComponent/LoadingComponent";
 
-function DefaultSlider({ data, title, containerClass }) {
+function DefaultSlider({ data, title, containerClass, loading }) {
   const outerContainerWidth = (88 * window.innerWidth) / 100;
   const cardWidth = 630;
   const gapBetweenCards = 15;
@@ -62,6 +63,7 @@ function DefaultSlider({ data, title, containerClass }) {
         onClick={handlePreviousArrowClick}
         src="/img/left-arrow.svg"
       /> */}
+      {loading ? <LoadingComponent /> : (
       <Slider {...settings} ref={sliderRef}>
         {data.map((card, index) => (
           <div key={index}>
@@ -79,6 +81,7 @@ function DefaultSlider({ data, title, containerClass }) {
           </div>
         ))}
       </Slider>
+      )}
     </div>
   );
 }

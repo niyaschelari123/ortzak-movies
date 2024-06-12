@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import classes from "./Animes.module.css";
 import { useHistory } from "react-router-dom";
 import EventCard from "../EventCard/EventCard";
-import { collection, getDocs, query, where } from "firebase/firestore";
+import { collection, getDocs, limit, query, where } from "firebase/firestore";
 import { database } from "../../../firebase";
 import LoadingComponent from "../../../components/LoadingComponent/LoadingComponent";
 import FilterComponent from "../FilterComponent/FilterComponent";
@@ -31,7 +31,8 @@ function Animes() {
     }else{
       q = query(
         collection(database, `${user_email}_col`),
-        where("type", "==", "anime")
+        where("type", "==", "anime"),
+        limit(52)
       );
     }
 
@@ -90,7 +91,8 @@ function Animes() {
 
     const q = query(
       collection(database, `movieNames`),
-      where("searchId", "==", searchData) // Fetch documents where name starts with searchData
+      where("searchId", "==", searchData), // Fetch documents where name starts with searchData
+      where("type", "==", 'anime'),
     );
 
     try {

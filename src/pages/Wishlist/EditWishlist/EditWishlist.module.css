@@ -54,9 +54,10 @@
 @media (max-width: 800px){
 
     .addShowOuter h2{
-        padding-top: 6rem;
+        padding-top: 96px !important;
 
     }
+
 
     .addShowOuter{
         width: 80vw;

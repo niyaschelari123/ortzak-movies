@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import classes from './TvShows.module.css'
 import {useHistory} from 'react-router-dom'
 import EventCard from '../EventCard/EventCard';
-import { collection, getDocs, query, where } from "firebase/firestore";
+import { collection, getDocs, limit, query, where } from "firebase/firestore";
 import { database } from '../../../firebase';
 import LoadingComponent from '../../../components/LoadingComponent/LoadingComponent';
 import FilterComponent from '../FilterComponent/FilterComponent';
@@ -17,7 +17,7 @@ function TvShows() {
     const [searchData, setSearchData] = useState("");
     const [searchArray, setSearchArray] = useState([]);
     const [searchLoading, setSearchLoading] = useState(false);
-    const [searchValue, setSearchValue] = useState(undefined)
+    const [searchValue, setSearchValue] = useState(undefined);
 
     const fetchSeries = async() => {
         setLoading(true);
@@ -33,7 +33,8 @@ function TvShows() {
         }else{
           q = query(
             collection(database, `${user_email}_col`),
-            where("type", "==", "series")
+            where("type", "==", "series"),
+            limit(52)
           );
         }
     
@@ -74,6 +75,7 @@ function TvShows() {
         const q = query(
           collection(database, 'movieNames'),
           where("searchId", "==", searchData),
+          where("type", "==", 'series'),
         );
     
         try {
@@ -85,20 +87,6 @@ function TvShows() {
           setSearchLoading(false);
           console.log("search documents are", documents);
           setSearchArray(documents);
-          if(documents.length>0){
-            alert(documents[0].name)
-          }    
-          // setMovieData(
-          //     documents.map((data) => ({
-          //         title: data.name,
-          //         year: data.year,
-          //         state: data.language,
-          //         genre: data.genre,
-          //         strikePrice: 180000,
-          //         review: 4.7,
-          //         img: data.images[0],
-          //     }))
-          // );
         } catch (error) {
           console.error("Error fetching documents: ", error);
         }
@@ -124,6 +112,7 @@ function TvShows() {
           setSearchValue = {setSearchValue}
           searchValue = {searchValue}
           fetchSeriesOnSearch={fetchSeriesOnSearch}
+          page = "series"
         />
       </div>
     {loading && (<LoadingComponent />)}
