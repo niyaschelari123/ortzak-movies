@@ -32,7 +32,7 @@ function Documentary() {
       q = query(
         collection(database, `${user_email}_col`),
         where("type", "==", "documentary"),
-        limit(52)
+        limit(100)
       );
     }
 

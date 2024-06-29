@@ -19,13 +19,17 @@ function Wishlist() {
     setSelectedShow("anime")
   }
 
+  const handleButtonClick4 = () => {
+    setSelectedShow("documentary")
+  }
+
   return (
     <div className={classes.wishListouter}>
       <div className = {classes.wishListButtons}>
       <ButtonGroup
-          buttonCount={3}
-          buttonTexts={["Movies", "Series","Anime"]}
-          onClickFunctions={[handleButtonClick1, handleButtonClick2, handleButtonClick3 ]}
+          buttonCount={4}
+          buttonTexts={["Movies", "Series","Anime","Documentary"]}
+          onClickFunctions={[handleButtonClick1, handleButtonClick2, handleButtonClick3, handleButtonClick4 ]}
         />
       </div>
       <WishListMovies selectedShow={selectedShow} setSelectedShow={setSelectedShow} />

@@ -34,7 +34,7 @@ function TvShows() {
           q = query(
             collection(database, `${user_email}_col`),
             where("type", "==", "series"),
-            limit(52)
+            limit(100)
           );
         }
     

@@ -32,7 +32,7 @@ function Animes() {
       q = query(
         collection(database, `${user_email}_col`),
         where("type", "==", "anime"),
-        limit(52)
+        limit(100)
       );
     }
 

@@ -68,29 +68,6 @@ function WatchHistory() {
     fetchMovies();
   }, []);
 
-  // Custom comparison function
-  function compareDates(a, b) {
-    const dateA = a.watched_date.slice(0, 10);
-    const dateB = b.watched_date.slice(0, 10);
-
-    // Handle 'dont remember' case
-    if (dateA === "Dont Remember" && dateB === "Dont Remember") {
-      return 0;
-    } else if (dateA === "Dont Remember") {
-      return 1;
-    } else if (dateB === "Dont Remember") {
-      return -1;
-    }
-
-    // Convert to Date objects for comparison
-    const dateObjA = new Date(dateA);
-    const dateObjB = new Date(dateB);
-
-    // console.log('conversion dates x', dateObjA, dateObjB)
-
-    // Compare dates (latest first)
-    return dateObjB - dateObjA;
-  }
 
   return (
     <>

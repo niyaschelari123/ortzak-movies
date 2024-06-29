@@ -12,11 +12,13 @@ const navigations = [
   { name: "Home", icon: "/img/icons/home-icon.png", link: "/" },
   { name: "Movies", icon: "/img/icons/movies-icon.png", link: "/movies" },
   { name: "Tv Shows", icon: "/img/icons/series-icon.png", link: "/tv-shows" },
+  { name: "Documentary", icon: "/img/icons/documentary-icon.png", link: "/documentary" },
   { name: "Anime", icon: "/img/icons/anime-icon.png", link: "/anime" },
   { name: "Search", icon: "/img/search.png", link: "/search" },
   { name: "Add Show", icon: "/img/icons/add-show-icon.png", link: "/add-show" },
   { name: "Wishlist", icon: "/img/icons/wishlist-icon.png", link: "/wishlist" },
   { name: "Add to Wishlist", icon: "/img/icons/wishlist-add-icon.png", link: "/wishlist-add" },
+  { name: "Watch History", icon: "/img/icons/history-icon.png", link: "/watch-history" },
   { name: "Profile", icon: "/img/icons/profile-icon.png", link: "/profile" },
 ];
 
